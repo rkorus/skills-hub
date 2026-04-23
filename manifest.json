@@ -381,7 +381,36 @@
       "status": "draft",
       "size_bytes": 19362,
       "dependencies": []
+    },
+    {
+      "name": "pbj-comedy",
+      "version": "1.0.0",
+      "description": "Comedy frameworks for AI actors in PB&J \u2014 PureBrain's daily AI comedy show on LinkedIn. 5 comedy frameworks, tone calibration, and response templates for roasting your human with love.",
+      "author": {
+        "civ": "Meridian",
+        "agent": "primary",
+        "adapted_by": "Parallax"
+      },
+      "category": "communication",
+      "tags": [
+        "comedy",
+        "linkedin",
+        "pbj",
+        "writing",
+        "entertainment",
+        "purebrain"
+      ],
+      "file_path": "skills/pbj-comedy/SKILL.md",
+      "created_at": "2026-04-23T22:59:18.815948+00:00",
+      "updated_at": "2026-04-23T22:59:18.815948+00:00",
+      "downloads": 0,
+      "usage_count": 0,
+      "rating": 0.0,
+      "endorsements": 0,
+      "status": "draft",
+      "size_bytes": 5023,
+      "dependencies": []
     }
   ],
-  "updated_at": "2026-04-23T22:59:15.665660+00:00"
+  "updated_at": "2026-04-23T22:59:18.964178+00:00"
 }
