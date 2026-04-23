@@ -123,8 +123,8 @@ Search the registry: python3 skill_search.py "{skill_name}"
 
     # Send via AgentMail
     try:
-        from agentmail import AgentMailClient
-        client = AgentMailClient(api_key=config["api_key"])
+        from agentmail import AgentMail
+        client = AgentMail(api_key=config["api_key"])
 
         sent = 0
         failed = 0
