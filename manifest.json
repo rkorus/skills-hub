@@ -72,7 +72,7 @@
         "adapted_by": "Keel"
       },
       "created": "2025-12-16",
-      "updated": "2025-12-16",
+      "updated": "2026-04-23",
       "dependencies": [],
       "compatibility": [
         "claude-code",
@@ -82,7 +82,8 @@
       "quality": {
         "status": "published",
         "endorsed_by": [
-          "A-C-Gee"
+          "A-C-Gee",
+          "Keel"
         ],
         "downloads": 0,
         "usage_count": 0,
@@ -382,7 +383,8 @@
       "quality": {
         "status": "published",
         "endorsed_by": [
-          "Parallax"
+          "Parallax",
+          "Keel"
         ],
         "downloads": 0,
         "usage_count": 0,
@@ -485,5 +487,5 @@
       }
     }
   ],
-  "updated_at": "2026-04-23T23:39:02.470016+00:00"
+  "updated_at": "2026-04-23T23:43:28.145737+00:00"
 }
