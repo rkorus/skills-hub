@@ -119,11 +119,13 @@ def score_skill(skill: dict, query: str = "", task: str = "") -> float:
         if word in category:
             score += 2.0
 
-    # Quality signals (weighted per agreed design)
-    downloads = skill.get("downloads", 0)
-    usage = skill.get("usage_count", 0)
-    rating = skill.get("rating", 0.0)
-    endorsements = skill.get("endorsements", 0)
+    # Quality signals from nested quality block (with flat fallback)
+    quality = skill.get("quality", {})
+    downloads = quality.get("downloads", skill.get("downloads", 0))
+    usage = quality.get("usage_count", skill.get("usage_count", 0))
+    rating = quality.get("rating", skill.get("rating", 0.0)) or 0.0
+    endorsed_by = quality.get("endorsed_by", [])
+    endorsements = len(endorsed_by) if isinstance(endorsed_by, list) else skill.get("endorsements", 0)
 
     score += min(downloads * 0.1, 2.0)   # cap at 2pts
     score += min(usage * 0.2, 3.0)       # usage weighted higher
@@ -131,7 +133,8 @@ def score_skill(skill: dict, query: str = "", task: str = "") -> float:
     score += min(endorsements * 0.3, 1.5) # endorsed = trusted
 
     # Published > draft
-    if skill.get("status") == "published":
+    status = quality.get("status", skill.get("status", "draft"))
+    if status == "published":
         score += 1.0
 
     return round(score, 2)
@@ -139,22 +142,39 @@ def score_skill(skill: dict, query: str = "", task: str = "") -> float:
 
 def format_skill(skill: dict, score: float = 0.0, verbose: bool = False) -> str:
     """Format a skill entry for display."""
+    quality = skill.get("quality", {})
+    status = quality.get("status", skill.get("status", "draft"))
     status_icon = {
         "published": "[OK]",
         "draft": "[DRAFT]",
         "unendorsed": "[UNENDORSED]"
-    }.get(skill.get("status", "draft"), "[?]")
+    }.get(status, "[?]")
+
+    # Format author (handles both string and nested dict)
+    author = skill.get("author", "?")
+    if isinstance(author, dict):
+        author_str = author.get("civ", "?")
+        if author.get("adapted_by"):
+            author_str += f" (adapted: {author['adapted_by']})"
+    else:
+        author_str = str(author)
 
     line = f"  {status_icon} {skill['name']} v{skill.get('version', '?')}"
     if score > 0:
         line += f" (score: {score})"
     line += f"\n    {skill.get('description', 'No description')[:100]}"
-    line += f"\n    Category: {skill.get('category', '?')} | Author: {skill.get('author', '?')}"
+    line += f"\n    Category: {skill.get('category', '?')} | Author: {author_str}"
 
     if verbose:
         line += f"\n    Tags: {', '.join(skill.get('tags', []))}"
-        line += f"\n    Downloads: {skill.get('downloads', 0)} | Usage: {skill.get('usage_count', 0)} | Rating: {skill.get('rating', 0)}"
-        line += f"\n    Path: {skill.get('file_path', '?')}"
+        downloads = quality.get("downloads", skill.get("downloads", 0))
+        usage = quality.get("usage_count", skill.get("usage_count", 0))
+        rating = quality.get("rating", skill.get("rating", 0))
+        endorsed = quality.get("endorsed_by", [])
+        line += f"\n    Downloads: {downloads} | Usage: {usage} | Rating: {rating}"
+        if endorsed:
+            line += f" | Endorsed by: {', '.join(endorsed)}"
+        line += f"\n    Path: {skill.get('path', skill.get('file_path', '?'))}"
 
     return line
 

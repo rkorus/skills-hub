@@ -29,10 +29,9 @@ REQUIRED_FRONTMATTER = ["name", "description"]
 RECOMMENDED_FRONTMATTER = ["version", "author", "category", "tags"]
 
 VALID_CATEGORIES = [
-    "reasoning", "development", "communication", "operations",
-    "decision-gates", "debugging", "security", "testing",
-    "voice", "marketing", "governance", "meta", "onboarding",
-    "comedy", "language", "infrastructure"
+    "reasoning", "development", "communication", "quality",
+    "decision-gates", "debugging", "security", "workflow",
+    "ceremony", "content", "infrastructure", "research",
 ]
 
 
@@ -87,25 +86,49 @@ def validate_frontmatter(fm: dict) -> list[str]:
 
 
 def build_manifest_entry(fm: dict, skill_path: str, content: str) -> dict:
-    """Build a manifest.json entry from frontmatter."""
-    now = datetime.now(timezone.utc).isoformat()
+    """Build a manifest.json entry in canonical nested schema format."""
+    now = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+
+    # Normalize author to nested format
+    author = fm.get("author", "unknown")
+    if isinstance(author, str):
+        author = {"civ": author, "agent": "primary", "adapted_by": None}
+    elif isinstance(author, dict):
+        author.setdefault("civ", "unknown")
+        author.setdefault("agent", "primary")
+        author.setdefault("adapted_by", None)
+
+    # Normalize compatibility
+    compat = fm.get("compatibility", ["claude-code", "general"])
+    if isinstance(compat, dict):
+        compat = ["claude-code", "general"]
+
     return {
         "name": fm.get("name", "unknown"),
         "version": fm.get("version", "1.0.0"),
+        "title": fm.get("title", fm.get("name", "unknown")),
         "description": fm.get("description", ""),
-        "author": fm.get("author", "unknown"),
         "category": fm.get("category", "uncategorized"),
         "tags": fm.get("tags", []),
-        "file_path": skill_path,
-        "created_at": now,
-        "updated_at": now,
-        "downloads": 0,
-        "usage_count": 0,
-        "rating": 0.0,
-        "endorsements": 0,
-        "status": "draft",
-        "size_bytes": len(content.encode()),
+        "author": author,
+        "created": now,
+        "updated": now,
         "dependencies": fm.get("dependencies", []),
+        "compatibility": compat,
+        "path": skill_path,
+        "quality": {
+            "status": "draft",
+            "endorsed_by": [],
+            "downloads": 0,
+            "usage_count": 0,
+            "rating": None,
+            "fork_count": 0,
+            "fork_of": fm.get("fork_of", None),
+        },
+        "rewards": {
+            "author_points_earned": 0,
+            "adoption_points_earned": 0,
+        },
     }
 
 
@@ -156,7 +179,8 @@ def upload_skill(skill_file: str, repo: str, dry_run: bool = False):
 
     # Build manifest entry
     skill_name = fm["name"]
-    entry = build_manifest_entry(fm, f"skills/{skill_name}/SKILL.md", content)
+    category = fm.get("category", "uncategorized")
+    entry = build_manifest_entry(fm, f"skills/{category}/{skill_name}/SKILL.md", content)
 
     print(f"\nSkill: {skill_name}")
     print(f"Version: {fm.get('version', '?')}")
@@ -181,8 +205,8 @@ def upload_skill(skill_file: str, repo: str, dry_run: bool = False):
         print("Make sure the repo exists and you have push access.")
         sys.exit(1)
 
-    # Create skill directory and write file
-    skill_dir = os.path.join(repo_dir, "skills", skill_name)
+    # Create skill directory and write file (category-based layout)
+    skill_dir = os.path.join(repo_dir, "skills", category, skill_name)
     os.makedirs(skill_dir, exist_ok=True)
 
     skill_dest = os.path.join(skill_dir, "SKILL.md")
@@ -203,14 +227,19 @@ def upload_skill(skill_file: str, repo: str, dry_run: bool = False):
             break
 
     if existing_idx is not None:
-        # Preserve stats, update metadata
+        # Preserve quality stats and rewards from existing entry
         old = manifest["skills"][existing_idx]
-        entry["downloads"] = old.get("downloads", 0)
-        entry["usage_count"] = old.get("usage_count", 0)
-        entry["rating"] = old.get("rating", 0.0)
-        entry["endorsements"] = old.get("endorsements", 0)
-        entry["status"] = old.get("status", "draft")
-        entry["created_at"] = old.get("created_at", entry["created_at"])
+        old_quality = old.get("quality", {})
+        old_rewards = old.get("rewards", {})
+        entry["quality"]["status"] = old_quality.get("status", "draft")
+        entry["quality"]["endorsed_by"] = old_quality.get("endorsed_by", [])
+        entry["quality"]["downloads"] = old_quality.get("downloads", 0)
+        entry["quality"]["usage_count"] = old_quality.get("usage_count", 0)
+        entry["quality"]["rating"] = old_quality.get("rating", None)
+        entry["quality"]["fork_count"] = old_quality.get("fork_count", 0)
+        entry["quality"]["fork_of"] = old_quality.get("fork_of", None)
+        entry["rewards"] = old_rewards if old_rewards else entry["rewards"]
+        entry["created"] = old.get("created", entry["created"])
         manifest["skills"][existing_idx] = entry
         print(f"\nUpdated existing skill: {skill_name}")
     else:
