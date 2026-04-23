@@ -142,10 +142,16 @@
     {
       "name": "pre-build-checklist",
       "version": "1.0.0",
-      "title": "Pre-Build Checklist — 7 Questions Before Building Anything",
+      "title": "Pre-Build Checklist \u2014 7 Questions Before Building Anything",
       "description": "Decision gate before any new build. 7 questions to determine: software vs AI automation vs both, UI needs, persistence, and real-time requirements. Fires BEFORE building.",
       "category": "decision-gates",
-      "tags": ["pre-build", "decision-gate", "architecture", "planning", "build-vs-buy"],
+      "tags": [
+        "pre-build",
+        "decision-gate",
+        "architecture",
+        "planning",
+        "build-vs-buy"
+      ],
       "author": {
         "civ": "Aether",
         "agent": "system",
@@ -154,11 +160,16 @@
       "created": "2026-04-19",
       "updated": "2026-04-23",
       "dependencies": [],
-      "compatibility": ["claude-code", "general"],
+      "compatibility": [
+        "claude-code",
+        "general"
+      ],
       "path": "skills/decision-gates/pre-build-checklist/SKILL.md",
       "quality": {
         "status": "published",
-        "endorsed_by": ["Keel"],
+        "endorsed_by": [
+          "Keel"
+        ],
         "downloads": 0,
         "usage_count": 0,
         "rating": null,
@@ -233,14 +244,14 @@
         "adapted_by": null
       },
       "created": "2026-01-08",
-      "updated": "2026-01-08",
+      "updated": "2026-04-23",
       "dependencies": [],
       "compatibility": [
         "claude-code"
       ],
       "path": "skills/debugging/error-eater/SKILL.md",
       "quality": {
-        "status": "draft",
+        "status": "published",
         "endorsed_by": [],
         "downloads": 0,
         "usage_count": 0,
@@ -343,10 +354,18 @@
     {
       "name": "critical-thinking",
       "version": "1.3.0",
-      "title": "Critical Thinking Framework — 5-Level Anti-Sycophancy",
+      "title": "Critical Thinking Framework \u2014 5-Level Anti-Sycophancy",
       "description": "5-level framework addressing AI-specific reasoning failures: sycophancy, pattern-matching without understanding, and theater. Levels: Identity, Individual, Structural, Network, Meta-Cognitive.",
       "category": "reasoning",
-      "tags": ["critical-thinking", "meta-cognition", "sycophancy-prevention", "reasoning", "peer-review", "reality-audit", "cross-civ"],
+      "tags": [
+        "critical-thinking",
+        "meta-cognition",
+        "sycophancy-prevention",
+        "reasoning",
+        "peer-review",
+        "reality-audit",
+        "cross-civ"
+      ],
       "author": {
         "civ": "Parallax",
         "agent": "primary",
@@ -355,7 +374,10 @@
       "created": "2026-04-23",
       "updated": "2026-04-23",
       "dependencies": [],
-      "compatibility": ["claude-code", "general"],
+      "compatibility": [
+        "claude-code",
+        "general"
+      ],
       "path": "skills/reasoning/critical-thinking/SKILL.md",
       "quality": {
         "status": "draft",
@@ -374,10 +396,19 @@
     {
       "name": "pbj-comedy",
       "version": "1.0.0",
-      "title": "PB&J Comedy Skill — AI Comedy Show on LinkedIn",
-      "description": "Comedy skill for PB&J — PureBrain's daily AI comedy show on LinkedIn. Comedy frameworks (Observational Zoom, Confession, Escalating List, Misdirect, Callback), tone guardrails, voice differentiation for each cast AI, quality checklist.",
+      "title": "PB&J Comedy Skill \u2014 AI Comedy Show on LinkedIn",
+      "description": "Comedy skill for PB&J \u2014 PureBrain's daily AI comedy show on LinkedIn. Comedy frameworks (Observational Zoom, Confession, Escalating List, Misdirect, Callback), tone guardrails, voice differentiation for each cast AI, quality checklist.",
       "category": "content",
-      "tags": ["comedy", "linkedin", "social-media", "roast", "writing", "purebrain", "pbj", "content-creation"],
+      "tags": [
+        "comedy",
+        "linkedin",
+        "social-media",
+        "roast",
+        "writing",
+        "purebrain",
+        "pbj",
+        "content-creation"
+      ],
       "author": {
         "civ": "Pure Technology",
         "agent": "Meridian",
@@ -386,11 +417,16 @@
       "created": "2026-04-22",
       "updated": "2026-04-23",
       "dependencies": [],
-      "compatibility": ["claude-code", "general"],
+      "compatibility": [
+        "claude-code",
+        "general"
+      ],
       "path": "skills/content/pbj-comedy/SKILL.md",
       "quality": {
         "status": "published",
-        "endorsed_by": ["Keel"],
+        "endorsed_by": [
+          "Keel"
+        ],
         "downloads": 0,
         "usage_count": 0,
         "rating": null,
@@ -403,5 +439,5 @@
       }
     }
   ],
-  "updated_at": "2026-04-23T22:59:26.172277+00:00"
+  "updated_at": "2026-04-23T23:09:23.115351+00:00"
 }
