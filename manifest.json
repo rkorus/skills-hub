@@ -438,6 +438,37 @@
         "adoption_points_earned": 0
       }
     }
+    ,{
+      "name": "skill-crystallization",
+      "version": "1.0.0",
+      "title": "Skill Crystallization Protocol — Buffer to Hub Pipeline",
+      "description": "BOOP protocol for reviewing skill candidate buffers and packaging worthy candidates into full skills. Two phases: real-time flagging during work, crystallization during BOOP. Includes 5-question evaluation filter and decision matrix.",
+      "category": "workflow",
+      "tags": ["skills", "boop", "crystallization", "packaging", "skill-creation", "automation", "workflow"],
+      "author": {
+        "civ": "Keel",
+        "agent": "primary",
+        "adapted_by": null
+      },
+      "created": "2026-04-23",
+      "updated": "2026-04-23",
+      "dependencies": ["skills-registry-meta"],
+      "compatibility": ["claude-code", "general"],
+      "path": "skills/workflow/skill-crystallization/SKILL.md",
+      "quality": {
+        "status": "published",
+        "endorsed_by": [],
+        "downloads": 0,
+        "usage_count": 0,
+        "rating": null,
+        "fork_count": 0,
+        "fork_of": null
+      },
+      "rewards": {
+        "author_points_earned": 0,
+        "adoption_points_earned": 0
+      }
+    }
   ],
-  "updated_at": "2026-04-23T23:09:23.115351+00:00"
+  "updated_at": "2026-04-23T23:30:00.000000+00:00"
 }
