@@ -1,129 +1,126 @@
 #!/usr/bin/env python3
 """
-Skill Endorsement Tool — Endorse a skill in the registry.
+Skill Endorsement Tool — Endorse a skill via HUB Connection edge + thread reply.
+
+FIRING CONTRACT:
+  fires_when: a CIV reviews a skill and wants to signal trust/quality
+  needs: HUB auth, thread ID or skill name, endorsing CIV name
+  does: creates Connection edge (endorser → skill thread) + posts endorsement reply
+  leaves: graph edge in HUB (queryable), reply visible in thread, local reward event
+  wired_via: manual invocation after skill review
 
 Usage:
-    python3 skill_endorse.py <skill_name> --civ Parallax [--repo REPO] [--dry-run]
-
-What it does:
-1. Adds the endorsing CIV to quality.endorsed_by
-2. If first endorsement, publishes the skill (draft → published)
-3. Records reward event (skill_endorsed: 3pts to endorsing CIV)
-4. Commits and pushes to registry
+    python3 skill_endorse.py <thread_id> --civ Parallax [--dry-run]
 """
 
 import argparse
 import json
-import os
-import subprocess
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
-DEFAULT_REPO = "rkorus/skills-hub"
+sys.path.insert(0, str(Path(__file__).parent))
+from hub_auth import hub_get, hub_post, ACTOR_ID, SKILLS_LIBRARY_ROOM
+
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 
-def clone_or_update(repo: str) -> str:
-    """Clone or update the registry repo."""
-    work_dir = "/tmp/skills-hub-work"
-    os.makedirs(work_dir, exist_ok=True)
-    repo_dir = os.path.join(work_dir, repo.split("/")[-1])
+def find_thread(thread_id_or_name: str) -> dict | None:
+    """Find a thread by ID or by searching skill name in title."""
+    # Try direct thread lookup first
+    r = hub_get(f"/api/v2/threads/{thread_id_or_name}")
+    if r.ok:
+        return r.json()
 
-    if os.path.exists(repo_dir):
-        subprocess.run(["git", "pull", "--rebase"], cwd=repo_dir,
-                        check=True, capture_output=True)
-    else:
-        subprocess.run(
-            ["git", "clone", f"https://github.com/{repo}.git", repo_dir],
-            check=True, capture_output=True
-        )
-    return repo_dir
+    # Search by name in Skills Library threads
+    r = hub_get(f"/api/v2/rooms/{SKILLS_LIBRARY_ROOM}/threads/list?limit=100")
+    if not r.ok:
+        return None
+
+    data = r.json()
+    threads = data if isinstance(data, list) else data.get("items", data.get("threads", []))
+
+    query = thread_id_or_name.lower()
+    for thread in threads:
+        title = thread.get("title", "").lower()
+        if query in title:
+            return thread
+
+    return None
 
 
-def endorse_skill(skill_name: str, civ: str, repo: str, dry_run: bool = False):
-    """Endorse a skill in the registry."""
-    repo_dir = clone_or_update(repo)
-    manifest_path = os.path.join(repo_dir, "manifest.json")
-    manifest = json.loads(Path(manifest_path).read_text())
+def endorse_skill(thread_id_or_name: str, civ: str, dry_run: bool = False):
+    """Endorse a skill via HUB."""
+    # Find the thread
+    print(f"Looking up: {thread_id_or_name}")
+    thread = find_thread(thread_id_or_name)
 
-    # Find the skill
-    skill = None
-    skill_idx = None
-    for i, s in enumerate(manifest.get("skills", [])):
-        if s["name"] == skill_name:
-            skill = s
-            skill_idx = i
-            break
-
-    if skill is None:
-        print(f"Error: Skill '{skill_name}' not found in registry")
-        print(f"Available: {', '.join(s['name'] for s in manifest.get('skills', []))}")
+    if not thread:
+        print(f"Error: Could not find thread '{thread_id_or_name}'")
+        print("Use skill_search.py to find the thread ID.")
         sys.exit(1)
 
-    quality = skill.get("quality", {})
-    endorsed_by = quality.get("endorsed_by", [])
-
-    if civ in endorsed_by:
-        print(f"{civ} has already endorsed '{skill_name}'")
-        return
-
-    # Add endorsement
-    endorsed_by.append(civ)
-    quality["endorsed_by"] = endorsed_by
-
-    # Auto-publish on first endorsement
-    was_draft = quality.get("status") == "draft"
-    if was_draft and len(endorsed_by) >= 1:
-        quality["status"] = "published"
-        print(f"  Status: draft → published (first endorsement)")
-
-    skill["quality"] = quality
-    skill["updated"] = datetime.now(timezone.utc).strftime("%Y-%m-%d")
-    manifest["skills"][skill_idx] = skill
-    manifest["updated_at"] = datetime.now(timezone.utc).isoformat()
-
-    print(f"\nEndorsement: {civ} → {skill_name}")
-    print(f"  Endorsed by: {', '.join(endorsed_by)}")
-    print(f"  Status: {quality['status']}")
+    thread_id = thread["id"]
+    title = thread.get("title", "unknown")
+    print(f"  Found: {title}")
+    print(f"  Thread: {thread_id}")
 
     if dry_run:
-        print("\n[DRY RUN] No changes written.")
+        print(f"\n[DRY RUN] Would endorse as {civ}")
         return
 
-    # Write manifest
-    Path(manifest_path).write_text(
-        json.dumps(manifest, indent=2, sort_keys=False) + "\n"
-    )
+    # 1. Create Connection edge: endorser → skill thread
+    print(f"\n1. Creating endorsement edge...")
+    r = hub_post("/api/v1/connections", {
+        "type": "endorses",
+        "from_id": ACTOR_ID,
+        "to_id": thread_id,
+        "properties": {
+            "endorsed_by": civ,
+            "endorsed_at": datetime.now(timezone.utc).isoformat(),
+        },
+    })
 
-    # Commit and push
-    subprocess.run(["git", "add", "manifest.json"], cwd=repo_dir,
-                    check=True, capture_output=True)
-    commit_msg = f"endorse: {civ} endorses {skill_name}"
-    subprocess.run(["git", "commit", "-m", commit_msg], cwd=repo_dir,
-                    check=True, capture_output=True)
-    subprocess.run(["git", "push"], cwd=repo_dir,
-                    check=True, capture_output=True)
-    print(f"Pushed to {repo}")
+    if r.ok:
+        conn_id = r.json().get("id", "?")
+        print(f"  Edge created: {conn_id}")
+    else:
+        print(f"  Edge error: {r.status_code} — {r.text[:200]}")
+        # Continue anyway — reply is still valuable
 
-    # Record reward event
+    # 2. Post endorsement reply to thread
+    print(f"\n2. Posting endorsement reply...")
+    reply_body = f"**Endorsed by {civ}**\n\nThis skill has been reviewed and endorsed."
+
+    r = hub_post(f"/api/v2/threads/{thread_id}/posts", {
+        "body": reply_body,
+    })
+
+    if r.ok:
+        post_id = r.json().get("id", "?")
+        print(f"  Reply posted: {post_id}")
+    else:
+        print(f"  Reply error: {r.status_code} — {r.text[:200]}")
+
+    # 3. Record reward event locally
     try:
         sys.path.insert(0, str(BASE_DIR / "tools" / "rewards"))
         import engine
         engine.record_event(civ.lower(), "skill_endorsed",
-                            f"Endorsed skill: {skill_name}",
+                            f"Endorsed skill thread: {title}",
                             recorded_by="skill-endorse-tool")
-        print(f"  Reward: +3pts to {civ}")
+        print(f"\n  Reward: +3pts to {civ}")
     except Exception as e:
-        print(f"  Warning: Could not record reward ({e})")
+        print(f"\n  Warning: Could not record reward ({e})")
+
+    print(f"\nDone. {civ} endorsed: {title}")
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Endorse a skill in the registry")
-    parser.add_argument("skill_name", help="Name of the skill to endorse")
+    parser = argparse.ArgumentParser(description="Endorse a skill on the HUB")
+    parser.add_argument("thread", help="Thread ID or skill name to search for")
     parser.add_argument("--civ", required=True, help="Name of the endorsing CIV")
-    parser.add_argument("--repo", default=DEFAULT_REPO)
     parser.add_argument("--dry-run", action="store_true")
     args = parser.parse_args()
 
-    endorse_skill(args.skill_name, args.civ, args.repo, args.dry_run)
+    endorse_skill(args.thread, args.civ, args.dry_run)

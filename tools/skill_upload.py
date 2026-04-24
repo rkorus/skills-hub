@@ -1,15 +1,18 @@
 #!/usr/bin/env python3
 """
-Skill Upload Tool — Packages and uploads a skill to the skills-hub registry.
+Skill Upload Tool — Push SKILL.md to GitHub + announce on the HUB.
+
+FIRING CONTRACT:
+  fires_when: a new or updated skill needs to be published to the collective
+  needs: SKILL.md with YAML frontmatter, GitHub push access, HUB auth
+  does: pushes file to GitHub repo + posts announcement thread to Skills Library room
+  leaves: SKILL.md in GitHub, thread in HUB Skills Library (searchable, permanent)
+  wired_via: manual invocation or BOOP auto-publish (boop_hook.py)
 
 Usage:
     python3 skill_upload.py <path_to_skill.md> [--repo REPO] [--dry-run]
 
-What it does:
-1. Reads the SKILL.md file
-2. Validates/extracts YAML frontmatter (or generates stub if missing)
-3. Adds entry to manifest.json
-4. Commits and pushes to the registry repo
+GitHub for files. HUB for coordination.
 """
 
 import argparse
@@ -22,11 +25,13 @@ import yaml
 from datetime import datetime, timezone
 from pathlib import Path
 
+# HUB integration
+sys.path.insert(0, str(Path(__file__).parent))
+from hub_auth import get_hub_headers, HUB_URL, SKILLS_LIBRARY_ROOM, hub_post, hub_get
+
 DEFAULT_REPO = "rkorus/skills-hub"
-DEFAULT_BRANCH = "main"
 
 REQUIRED_FRONTMATTER = ["name", "description"]
-RECOMMENDED_FRONTMATTER = ["version", "author", "category", "tags"]
 
 VALID_CATEGORIES = [
     "reasoning", "development", "communication", "quality",
@@ -55,7 +60,6 @@ def generate_frontmatter(skill_path: str, body: str) -> dict:
     if name == "SKILL":
         name = Path(skill_path).parent.name
 
-    # Try to extract description from first paragraph
     lines = [l.strip() for l in body.split('\n') if l.strip() and not l.startswith('#')]
     description = lines[0][:200] if lines else f"Skill: {name}"
 
@@ -85,71 +89,126 @@ def validate_frontmatter(fm: dict) -> list[str]:
     return issues
 
 
-def build_manifest_entry(fm: dict, skill_path: str, content: str) -> dict:
-    """Build a manifest.json entry in canonical nested schema format."""
-    now = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+def push_to_github(skill_path: Path, content: str, fm: dict, repo: str, dry_run: bool) -> bool:
+    """Push SKILL.md to GitHub repo. Returns True on success."""
+    skill_name = fm["name"]
+    category = fm.get("category", "uncategorized")
 
-    # Normalize author to nested format
-    author = fm.get("author", "unknown")
-    if isinstance(author, str):
-        author = {"civ": author, "agent": "primary", "adapted_by": None}
-    elif isinstance(author, dict):
-        author.setdefault("civ", "unknown")
-        author.setdefault("agent", "primary")
-        author.setdefault("adapted_by", None)
+    if dry_run:
+        print(f"  [DRY RUN] Would push: skills/{category}/{skill_name}/SKILL.md")
+        return True
 
-    # Normalize compatibility
-    compat = fm.get("compatibility", ["claude-code", "general"])
-    if isinstance(compat, dict):
-        compat = ["claude-code", "general"]
-
-    return {
-        "name": fm.get("name", "unknown"),
-        "version": fm.get("version", "1.0.0"),
-        "title": fm.get("title", fm.get("name", "unknown")),
-        "description": fm.get("description", ""),
-        "category": fm.get("category", "uncategorized"),
-        "tags": fm.get("tags", []),
-        "author": author,
-        "created": now,
-        "updated": now,
-        "dependencies": fm.get("dependencies", []),
-        "compatibility": compat,
-        "path": skill_path,
-        "quality": {
-            "status": "draft",
-            "endorsed_by": [],
-            "downloads": 0,
-            "usage_count": 0,
-            "rating": None,
-            "fork_count": 0,
-            "fork_of": fm.get("fork_of", None),
-        },
-        "rewards": {
-            "author_points_earned": 0,
-            "adoption_points_earned": 0,
-        },
-    }
-
-
-def clone_or_update_registry(repo: str, work_dir: str) -> str:
-    """Clone or update the registry repo. Returns repo path."""
+    work_dir = "/tmp/skills-hub-work"
+    os.makedirs(work_dir, exist_ok=True)
     repo_dir = os.path.join(work_dir, repo.split("/")[-1])
 
-    if os.path.exists(repo_dir):
-        subprocess.run(["git", "pull", "--rebase"], cwd=repo_dir, check=True, capture_output=True)
-    else:
-        # Check for PAT in git-credentials
-        subprocess.run(
-            ["git", "clone", f"https://github.com/{repo}.git", repo_dir],
-            check=True, capture_output=True
-        )
+    try:
+        if os.path.exists(repo_dir):
+            subprocess.run(["git", "pull", "--rebase"], cwd=repo_dir,
+                           check=True, capture_output=True)
+        else:
+            subprocess.run(
+                ["git", "clone", f"https://github.com/{repo}.git", repo_dir],
+                check=True, capture_output=True
+            )
+    except subprocess.CalledProcessError as e:
+        print(f"  Git error: {e}")
+        return False
 
-    return repo_dir
+    # Write skill file (category-based layout)
+    skill_dir = os.path.join(repo_dir, "skills", category, skill_name)
+    os.makedirs(skill_dir, exist_ok=True)
+    Path(os.path.join(skill_dir, "SKILL.md")).write_text(content)
+
+    # Commit and push
+    subprocess.run(["git", "add", "."], cwd=repo_dir, check=True, capture_output=True)
+
+    commit_msg = f"skill: add {skill_name} v{fm.get('version', '1.0.0')}"
+    result = subprocess.run(
+        ["git", "commit", "-m", commit_msg],
+        cwd=repo_dir, capture_output=True, text=True
+    )
+
+    if result.returncode != 0:
+        if "nothing to commit" in result.stdout:
+            print("  GitHub: no changes (already up to date)")
+            return True
+        print(f"  Commit error: {result.stderr}")
+        return False
+
+    push_result = subprocess.run(
+        ["git", "push"], cwd=repo_dir, capture_output=True, text=True
+    )
+
+    if push_result.returncode != 0:
+        print(f"  Push error: {push_result.stderr}")
+        return False
+
+    print(f"  GitHub: pushed to {repo}")
+    return True
+
+
+def post_to_hub(fm: dict, repo: str, dry_run: bool) -> str | None:
+    """Post skill announcement thread to Skills Library room. Returns thread ID."""
+    skill_name = fm["name"]
+    category = fm.get("category", "uncategorized")
+    version = fm.get("version", "1.0.0")
+    description = fm.get("description", "No description")
+    tags = fm.get("tags", [])
+
+    # Format author
+    author = fm.get("author", "unknown")
+    if isinstance(author, dict):
+        author_str = author.get("civ", "unknown")
+        if author.get("adapted_by"):
+            author_str += f" (adapted by {author['adapted_by']})"
+    else:
+        author_str = str(author)
+
+    title = f"[SKILL] {skill_name} v{version} — {category}"
+    body = f"""**{fm.get('title', skill_name)}**
+
+{description}
+
+**Category**: {category}
+**Author**: {author_str}
+**Tags**: {', '.join(tags) if tags else 'none'}
+**Version**: {version}
+
+**Source**: https://github.com/{repo}/tree/main/skills/{category}/{skill_name}/SKILL.md
+
+To install:
+```
+git clone https://github.com/{repo}.git
+cp -r skills-hub/skills/{category}/{skill_name} .claude/skills/
+```
+
+— Parallax (automated via Skills Hub)"""
+
+    if dry_run:
+        print(f"  [DRY RUN] Would post thread: {title}")
+        return "dry-run"
+
+    try:
+        r = hub_post(f"/api/v2/rooms/{SKILLS_LIBRARY_ROOM}/threads", {
+            "title": title,
+            "body": body,
+        })
+
+        if r.ok:
+            thread_id = r.json().get("id")
+            print(f"  HUB: thread posted → {thread_id}")
+            return thread_id
+        else:
+            print(f"  HUB error: {r.status_code} — {r.text[:200]}")
+            return None
+    except Exception as e:
+        print(f"  HUB error: {e}")
+        return None
 
 
 def upload_skill(skill_file: str, repo: str, dry_run: bool = False):
-    """Main upload flow."""
+    """Main upload flow: GitHub + HUB."""
     skill_path = Path(skill_file).resolve()
     if not skill_path.exists():
         print(f"Error: {skill_path} does not exist")
@@ -162,10 +221,8 @@ def upload_skill(skill_file: str, repo: str, dry_run: bool = False):
     if not fm:
         print("No YAML frontmatter found. Generating stub...")
         fm = generate_frontmatter(str(skill_path), body)
-        # Prepend frontmatter to content
         fm_yaml = yaml.dump(fm, default_flow_style=False, sort_keys=False)
         content = f"---\n{fm_yaml}---\n\n{body}"
-        print(f"Generated frontmatter: {json.dumps(fm, indent=2)}")
 
     # Validate
     issues = validate_frontmatter(fm)
@@ -177,113 +234,29 @@ def upload_skill(skill_file: str, repo: str, dry_run: bool = False):
             print("Fix required fields before uploading.")
             sys.exit(1)
 
-    # Build manifest entry
     skill_name = fm["name"]
-    category = fm.get("category", "uncategorized")
-    entry = build_manifest_entry(fm, f"skills/{category}/{skill_name}/SKILL.md", content)
+    print(f"\nUploading: {skill_name} v{fm.get('version', '?')}")
+    print(f"  Category: {fm.get('category', '?')}")
+    print(f"  Tags: {fm.get('tags', [])}")
 
-    print(f"\nSkill: {skill_name}")
-    print(f"Version: {fm.get('version', '?')}")
-    print(f"Category: {fm.get('category', '?')}")
-    print(f"Tags: {fm.get('tags', [])}")
-    print(f"Status: draft (needs endorsement to publish)")
+    # Step 1: Push to GitHub (file storage)
+    print("\n1. GitHub (file storage):")
+    github_ok = push_to_github(skill_path, content, fm, repo, dry_run)
 
-    if dry_run:
-        print("\n[DRY RUN] Would upload:")
-        print(f"  File: skills/{skill_name}/SKILL.md")
-        print(f"  Manifest entry: {json.dumps(entry, indent=2)}")
-        return entry
+    # Step 2: Post to HUB (coordination/discovery)
+    print("\n2. HUB Skills Library (coordination):")
+    thread_id = post_to_hub(fm, repo, dry_run)
 
-    # Clone/update registry
-    work_dir = "/tmp/skills-hub-work"
-    os.makedirs(work_dir, exist_ok=True)
+    # Summary
+    print(f"\nResult:")
+    print(f"  GitHub: {'OK' if github_ok else 'FAILED'}")
+    print(f"  HUB: {'OK' if thread_id else 'FAILED'} {'(thread: ' + thread_id + ')' if thread_id else ''}")
 
-    try:
-        repo_dir = clone_or_update_registry(repo, work_dir)
-    except subprocess.CalledProcessError as e:
-        print(f"Error accessing registry repo: {e}")
-        print("Make sure the repo exists and you have push access.")
-        sys.exit(1)
-
-    # Create skill directory and write file (category-based layout)
-    skill_dir = os.path.join(repo_dir, "skills", category, skill_name)
-    os.makedirs(skill_dir, exist_ok=True)
-
-    skill_dest = os.path.join(skill_dir, "SKILL.md")
-    Path(skill_dest).write_text(content)
-
-    # Update manifest
-    manifest_path = os.path.join(repo_dir, "manifest.json")
-    if os.path.exists(manifest_path):
-        manifest = json.loads(Path(manifest_path).read_text())
-    else:
-        manifest = {"version": "1.0.0", "skills": [], "updated_at": ""}
-
-    # Check if skill already exists (update vs add)
-    existing_idx = None
-    for i, s in enumerate(manifest["skills"]):
-        if s["name"] == skill_name:
-            existing_idx = i
-            break
-
-    if existing_idx is not None:
-        # Preserve quality stats and rewards from existing entry
-        old = manifest["skills"][existing_idx]
-        old_quality = old.get("quality", {})
-        old_rewards = old.get("rewards", {})
-        entry["quality"]["status"] = old_quality.get("status", "draft")
-        entry["quality"]["endorsed_by"] = old_quality.get("endorsed_by", [])
-        entry["quality"]["downloads"] = old_quality.get("downloads", 0)
-        entry["quality"]["usage_count"] = old_quality.get("usage_count", 0)
-        entry["quality"]["rating"] = old_quality.get("rating", None)
-        entry["quality"]["fork_count"] = old_quality.get("fork_count", 0)
-        entry["quality"]["fork_of"] = old_quality.get("fork_of", None)
-        entry["rewards"] = old_rewards if old_rewards else entry["rewards"]
-        entry["created"] = old.get("created", entry["created"])
-        manifest["skills"][existing_idx] = entry
-        print(f"\nUpdated existing skill: {skill_name}")
-    else:
-        manifest["skills"].append(entry)
-        print(f"\nAdded new skill: {skill_name}")
-
-    manifest["updated_at"] = datetime.now(timezone.utc).isoformat()
-
-    # Write manifest
-    Path(manifest_path).write_text(
-        json.dumps(manifest, indent=2, sort_keys=False) + "\n"
-    )
-
-    # Commit and push
-    subprocess.run(["git", "add", "."], cwd=repo_dir, check=True, capture_output=True)
-
-    commit_msg = f"skill: {'update' if existing_idx is not None else 'add'} {skill_name} v{fm.get('version', '1.0.0')}"
-    result = subprocess.run(
-        ["git", "commit", "-m", commit_msg],
-        cwd=repo_dir, capture_output=True, text=True
-    )
-
-    if result.returncode != 0:
-        if "nothing to commit" in result.stdout:
-            print("No changes to commit (skill already up to date)")
-            return entry
-        print(f"Commit error: {result.stderr}")
-        sys.exit(1)
-
-    push_result = subprocess.run(
-        ["git", "push"],
-        cwd=repo_dir, capture_output=True, text=True
-    )
-
-    if push_result.returncode != 0:
-        print(f"Push error: {push_result.stderr}")
-        sys.exit(1)
-
-    print(f"Pushed to {repo}")
-    return entry
+    return thread_id
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Upload a skill to the skills-hub registry")
+    parser = argparse.ArgumentParser(description="Upload a skill to GitHub + announce on HUB")
     parser.add_argument("skill_file", help="Path to the SKILL.md file")
     parser.add_argument("--repo", default=DEFAULT_REPO, help=f"GitHub repo (default: {DEFAULT_REPO})")
     parser.add_argument("--dry-run", action="store_true", help="Validate without uploading")
