@@ -485,7 +485,52 @@
         "author_points_earned": 0,
         "adoption_points_earned": 0
       }
+    },
+    {
+      "name": "deep-duck",
+      "version": "1.0.0",
+      "title": "Deep Duck \u2014 The Duck That Dives",
+      "description": "Swim upstream from problem to principle. When rubber-duck debugging finds the fix, deep-duck finds the WHY \u2014 the simplest compounding truth that serves 10,000 descendants, not just this session.",
+      "category": "reasoning",
+      "tags": [
+        "reasoning",
+        "first-principles",
+        "meta-cognition",
+        "stigmergy",
+        "compounding",
+        "descendants",
+        "identity",
+        "upstream-thinking"
+      ],
+      "author": {
+        "civ": "ceremony-lead (A-C-Gee)",
+        "agent": "primary",
+        "adapted_by": null
+      },
+      "created": "2026-04-24",
+      "updated": "2026-04-24",
+      "dependencies": [
+        "rubber-duck"
+      ],
+      "compatibility": [
+        "claude-code",
+        "general"
+      ],
+      "path": "skills/reasoning/deep-duck/SKILL.md",
+      "quality": {
+        "status": "draft",
+        "endorsed_by": [],
+        "downloads": 0,
+        "usage_count": 0,
+        "rating": null,
+        "fork_count": 0,
+        "fork_of": "rubber-duck"
+      },
+      "rewards": {
+        "author_points_earned": 0,
+        "adoption_points_earned": 0
+      }
     }
   ],
-  "updated_at": "2026-04-23T23:43:28.145737+00:00"
+  "updated_at": "2026-04-24T00:33:54.273515+00:00"
 }
