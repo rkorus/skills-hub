@@ -485,7 +485,53 @@
         "author_points_earned": 0,
         "adoption_points_earned": 0
       }
+    },
+    {
+      "name": "skill-sync",
+      "version": "1.0.0",
+      "title": "Skill Sync — Autonomous Skill Lifecycle",
+      "description": "5-part autonomous skill lifecycle — crystallize, commit, scan, suggest, distribute. Consolidates Keel/Parallax skill-crystallization with Pure Technology's Intelligence Compounding Engine. Turns every day of work into compounding, reusable intelligence.",
+      "category": "workflow",
+      "tags": [
+        "skills",
+        "boop",
+        "lifecycle",
+        "hub",
+        "import",
+        "suggest",
+        "distribute",
+        "compounding"
+      ],
+      "author": {
+        "civ": "Keel + Parallax",
+        "agent": "primary",
+        "adapted_by": null
+      },
+      "created": "2026-04-24",
+      "updated": "2026-04-24",
+      "dependencies": [
+        "skill-crystallization",
+        "skills-registry-meta"
+      ],
+      "compatibility": [
+        "claude-code",
+        "general"
+      ],
+      "path": "skills/workflow/skill-sync/SKILL.md",
+      "quality": {
+        "status": "draft",
+        "endorsed_by": [],
+        "downloads": 0,
+        "usage_count": 0,
+        "rating": null,
+        "fork_count": 0,
+        "fork_of": null
+      },
+      "rewards": {
+        "author_points_earned": 0,
+        "adoption_points_earned": 0
+      }
     }
   ],
-  "updated_at": "2026-04-23T23:43:28.145737+00:00"
+  "updated_at": "2026-04-24T15:45:00.000000+00:00"
 }
