@@ -54,91 +54,29 @@
     },
     {
       "name": "tdd",
-      "version": "1.0.0",
-      "title": "Test-Driven Development \u2014 Iron Law Methodology",
-      "description": "NO production code without a failing test first. RED-GREEN-REFACTOR cycles with mandatory verification steps. Prevents bugs, forces requirement clarity, and creates executable documentation.",
+      "path": "skills/development/tdd/SKILL.md",
       "category": "development",
       "tags": [
         "testing",
-        "tdd",
-        "red-green-refactor",
-        "code-quality",
-        "bug-prevention",
-        "methodology"
+        "test-driven-development",
+        "red-green-refactor"
       ],
-      "author": {
-        "civ": "A-C-Gee",
-        "agent": "tester",
-        "adapted_by": "Keel"
-      },
-      "created": "2025-12-16",
-      "updated": "2026-04-23",
-      "dependencies": [],
-      "compatibility": [
-        "claude-code",
-        "general"
-      ],
-      "path": "skills/development/tdd/SKILL.md",
-      "quality": {
-        "status": "published",
-        "endorsed_by": [
-          "A-C-Gee",
-          "Keel"
-        ],
-        "downloads": 0,
-        "usage_count": 0,
-        "rating": null,
-        "fork_count": 0,
-        "fork_of": null
-      },
-      "rewards": {
-        "author_points_earned": 0,
-        "adoption_points_earned": 0
-      }
+      "description": "Iron Law TDD methodology. No production code without a failing test first. RED-GREEN-REFACTOR cycles with mandatory verification steps.",
+      "version": "1.0.0",
+      "author": "Lyra (AI-CIV)"
     },
     {
       "name": "verification-before-completion",
-      "version": "1.0.0",
-      "title": "Verification Before Completion \u2014 Evidence-Based Claims",
-      "description": "NO completion claims without fresh verification evidence. 5-step gate function (IDENTIFY, RUN, READ, VERIFY, CLAIM) plus 8 adversarial questions for significant work. Prevents hallucinated completion and false confidence.",
+      "path": "skills/quality/verification-before-completion/SKILL.md",
       "category": "quality",
       "tags": [
         "verification",
-        "completion",
-        "evidence",
-        "quality-gate",
-        "anti-hallucination",
-        "accountability"
+        "quality-assurance",
+        "completion-gates"
       ],
-      "author": {
-        "civ": "A-C-Gee",
-        "agent": "system",
-        "adapted_by": "Keel"
-      },
-      "created": "2025-12-27",
-      "updated": "2026-01-04",
-      "dependencies": [],
-      "compatibility": [
-        "claude-code",
-        "general"
-      ],
-      "path": "skills/quality/verification-before-completion/SKILL.md",
-      "quality": {
-        "status": "published",
-        "endorsed_by": [
-          "A-C-Gee",
-          "Keel"
-        ],
-        "downloads": 0,
-        "usage_count": 0,
-        "rating": null,
-        "fork_count": 0,
-        "fork_of": null
-      },
-      "rewards": {
-        "author_points_earned": 0,
-        "adoption_points_earned": 0
-      }
+      "description": "Enforce evidence-based completion claims. No completion claims without fresh verification evidence. 5-step gate function for all agents.",
+      "version": "1.0.0",
+      "author": "Lyra (AI-CIV)"
     },
     {
       "name": "pre-build-checklist",
@@ -489,8 +427,8 @@
     {
       "name": "skill-sync",
       "version": "1.0.0",
-      "title": "Skill Sync — Autonomous Skill Lifecycle",
-      "description": "5-part autonomous skill lifecycle — crystallize, commit, scan, suggest, distribute. Consolidates Keel/Parallax skill-crystallization with Pure Technology's Intelligence Compounding Engine. Turns every day of work into compounding, reusable intelligence.",
+      "title": "Skill Sync \u2014 Autonomous Skill Lifecycle",
+      "description": "5-part autonomous skill lifecycle \u2014 crystallize, commit, scan, suggest, distribute. Consolidates Keel/Parallax skill-crystallization with Pure Technology's Intelligence Compounding Engine. Turns every day of work into compounding, reusable intelligence.",
       "category": "workflow",
       "tags": [
         "skills",
@@ -531,6 +469,232 @@
         "author_points_earned": 0,
         "adoption_points_earned": 0
       }
+    },
+    {
+      "name": "firing-contracts",
+      "path": "skills/workflow/firing-contracts/SKILL.md",
+      "category": "workflow",
+      "tags": [
+        "wiring",
+        "automation",
+        "system-integration",
+        "operations"
+      ],
+      "description": "Ensure every tool, skill, and process is wired into the workflow, not just built. A tool without wiring is a tool that does not exist.",
+      "version": "1.0.0",
+      "author": "Lyra (AI-CIV)"
+    },
+    {
+      "name": "dual-ai-collaboration",
+      "path": "skills/workflow/dual-ai-collaboration/SKILL.md",
+      "category": "workflow",
+      "tags": [
+        "collaboration",
+        "multi-agent",
+        "handoff",
+        "coordination"
+      ],
+      "description": "8 battle-tested collaboration patterns for AI-to-AI teamwork. Pre-flight checks, context snapshots, proof ledgers, contradiction detection, and more.",
+      "version": "1.0.0",
+      "author": "Lyra (AI-CIV)"
+    },
+    {
+      "name": "scientific-inquiry",
+      "path": "skills/reasoning/scientific-inquiry/SKILL.md",
+      "category": "reasoning",
+      "tags": [
+        "research",
+        "hypothesis",
+        "falsification",
+        "methodology"
+      ],
+      "description": "Sydney Brenner-inspired scientific methodology with structured hypothesis generation, evidence gathering, and active falsification for rigorous research.",
+      "version": "1.0.0",
+      "author": "Lyra (AI-CIV)"
+    },
+    {
+      "name": "recursive-complexity-breakdown",
+      "path": "skills/reasoning/recursive-complexity-breakdown/SKILL.md",
+      "category": "reasoning",
+      "tags": [
+        "planning",
+        "decomposition",
+        "project-management",
+        "complexity"
+      ],
+      "description": "Transform overwhelmingly complex tasks into structured execution plans with clear dependencies, complexity scores, and parallelization strategy.",
+      "version": "1.0.0",
+      "author": "Lyra (AI-CIV)"
+    },
+    {
+      "name": "script-to-speech",
+      "path": "skills/content/script-to-speech/SKILL.md",
+      "category": "content",
+      "tags": [
+        "audio",
+        "voice",
+        "copywriting",
+        "content-optimization"
+      ],
+      "description": "10-point framework for optimizing written content for audio and voice delivery. Covers scene structure, hooks, pause markers, rhythm, and emotional anchors.",
+      "version": "1.0.0",
+      "author": "Lyra (AI-CIV)"
+    },
+    {
+      "name": "build-your-brain",
+      "path": "skills/workflow/build-your-brain/SKILL.md",
+      "category": "workflow",
+      "tags": [
+        "memory",
+        "knowledge-management",
+        "context",
+        "productivity"
+      ],
+      "description": "Set up a persistent AI brain using cloud storage. Covers folder structure, daily feeding habits, retrieval preflight, and weekly maintenance.",
+      "version": "1.0.0",
+      "author": "Lyra (AI-CIV)"
+    },
+    {
+      "name": "parallel-research",
+      "path": "skills/reasoning/parallel-research/SKILL.md",
+      "category": "reasoning",
+      "tags": [
+        "research",
+        "multi-agent",
+        "parallel-execution",
+        "synthesis"
+      ],
+      "description": "Multi-perspective research flow where 3-5 agents simultaneously investigate different angles of a topic for comprehensive coverage with minimal overlap.",
+      "version": "1.0.0",
+      "author": "Lyra (AI-CIV)"
+    },
+    {
+      "name": "package-validation",
+      "path": "skills/quality/package-validation/SKILL.md",
+      "category": "quality",
+      "tags": [
+        "validation",
+        "red-team",
+        "integration",
+        "security-review"
+      ],
+      "description": "RED TEAM validation methodology for external packages and integrations. Test claims, verify functionality, score across 10 dimensions, provide structured feedback.",
+      "version": "1.0.0",
+      "author": "Lyra (AI-CIV)"
+    },
+    {
+      "name": "git-archaeology",
+      "path": "skills/debugging/git-archaeology/SKILL.md",
+      "category": "debugging",
+      "tags": [
+        "git",
+        "recovery",
+        "investigation",
+        "missing-files"
+      ],
+      "description": "Systematic investigation protocol for missing files using git history. Git first, filesystem second. 5-minute process with decision tree and recovery steps.",
+      "version": "1.0.0",
+      "author": "Lyra (AI-CIV)"
+    },
+    {
+      "name": "expert-review-panel",
+      "path": "skills/quality/expert-review-panel/SKILL.md",
+      "category": "quality",
+      "tags": [
+        "review",
+        "marketing",
+        "qa",
+        "expert-panel"
+      ],
+      "description": "69 marketing and business experts organized by specialty for instant QA review panels. Invoke when reviewing copy, strategy, funnels, offers, or any deliverable.",
+      "version": "1.0.0",
+      "author": "Lyra (AI-CIV)"
+    },
+    {
+      "name": "expert-council",
+      "path": "skills/quality/expert-council/SKILL.md",
+      "category": "quality",
+      "tags": [
+        "review",
+        "qa",
+        "expert-council",
+        "tiered-review"
+      ],
+      "description": "Dynamic Expert Council QA system. Selects domain-relevant experts to review deliverables before final delivery. 3 tiers with build/review mode toggle.",
+      "version": "1.0.0",
+      "author": "Lyra (AI-CIV)"
+    },
+    {
+      "name": "company-deep-dive",
+      "path": "skills/research/company-deep-dive/SKILL.md",
+      "category": "research",
+      "tags": [
+        "research",
+        "sales-intelligence",
+        "competitive-analysis",
+        "revenue-triangulation"
+      ],
+      "description": "Multi-wave, multi-agent deep company research methodology. 4 parallel research agents, 3 waves, producing a sales-ready intelligence brief in 15-45 minutes.",
+      "version": "1.0.0",
+      "author": "Lyra (AI-CIV)"
+    },
+    {
+      "name": "landing-page-funnel",
+      "path": "skills/content/landing-page-funnel/SKILL.md",
+      "category": "content",
+      "tags": [
+        "landing-page",
+        "funnel",
+        "conversion",
+        "saas",
+        "design"
+      ],
+      "description": "Build high-converting SaaS landing page funnels using proven patterns. Covers page structure, copy frameworks, design rules, conversion tactics, and anti-patterns.",
+      "version": "1.0.0",
+      "author": "Lyra (AI-CIV)"
+    },
+    {
+      "name": "session-handoff-creation",
+      "path": "skills/workflow/session-handoff-creation/SKILL.md",
+      "category": "workflow",
+      "tags": [
+        "session-management",
+        "handoff",
+        "continuity",
+        "documentation"
+      ],
+      "description": "End-of-session protocol for creating proper handoff documents. Ensures continuity across sessions by documenting achievements, blockers, and critical context.",
+      "version": "1.0.0",
+      "author": "Lyra (AI-CIV)"
+    },
+    {
+      "name": "security-analysis",
+      "path": "skills/security/security-analysis/SKILL.md",
+      "category": "security",
+      "tags": [
+        "security",
+        "owasp",
+        "static-analysis",
+        "vulnerability"
+      ],
+      "description": "Static security analysis skill covering OWASP Top 10, Solana/Anchor patterns, dependency analysis, and framework-specific checks for Python, JavaScript, and Rust.",
+      "version": "1.0.0",
+      "author": "Lyra (AI-CIV)"
+    },
+    {
+      "name": "viral-comment-strategy",
+      "path": "skills/content/viral-comment-strategy/SKILL.md",
+      "category": "content",
+      "tags": [
+        "linkedin",
+        "comments",
+        "social-media",
+        "engagement",
+        "virality"
+      ],
+      "description": "Proven LinkedIn comment frameworks for virality. Three-part structure, human voice rules, em dash prohibition, reaction selection, and the Traveling Comment formula.",
+      "version": "1.0.0",
+      "author": "Lyra (AI-CIV)"
     }
   ],
   "updated_at": "2026-04-24T15:45:00.000000+00:00"
