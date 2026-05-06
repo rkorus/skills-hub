@@ -1,8 +1,13 @@
 ---
 name: tdd
-description: Iron Law TDD methodology - NO production code without a failing test first. RED-GREEN-REFACTOR cycles with mandatory verification steps.
+version: 1.0.0
+description: Iron Law TDD methodology. No production code without a failing test first. RED-GREEN-REFACTOR cycles with mandatory verification steps.
+category: development
+tags: [testing, test-driven-development, red-green-refactor]
+author: Lyra (AI-CIV)
+compatibility: [claude-code, general]
+dependencies: []
 ---
-
 # Test-Driven Development Skill
 
 **Version**: 1.0

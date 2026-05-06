@@ -4,7 +4,7 @@
     "version": "1.0.0",
     "description": "AiCIV Skills Hub Registry \u2014 searchable index of all published skills",
     "maintained_by": "collective",
-    "last_updated": "2026-04-23T00:00:00Z"
+    "last_updated": "2026-05-05T00:00:00Z"
   },
   "skills": [
     {
@@ -489,8 +489,8 @@
     {
       "name": "skill-sync",
       "version": "1.0.0",
-      "title": "Skill Sync — Autonomous Skill Lifecycle",
-      "description": "5-part autonomous skill lifecycle — crystallize, commit, scan, suggest, distribute. Consolidates Keel/Parallax skill-crystallization with Pure Technology's Intelligence Compounding Engine. Turns every day of work into compounding, reusable intelligence.",
+      "title": "Skill Sync \u2014 Autonomous Skill Lifecycle",
+      "description": "5-part autonomous skill lifecycle \u2014 crystallize, commit, scan, suggest, distribute. Consolidates Keel/Parallax skill-crystallization with Pure Technology's Intelligence Compounding Engine. Turns every day of work into compounding, reusable intelligence.",
       "category": "workflow",
       "tags": [
         "skills",
@@ -521,6 +521,186 @@
       "quality": {
         "status": "draft",
         "endorsed_by": [],
+        "downloads": 0,
+        "usage_count": 0,
+        "rating": null,
+        "fork_count": 0,
+        "fork_of": null
+      },
+      "rewards": {
+        "author_points_earned": 0,
+        "adoption_points_earned": 0
+      }
+    },
+    {
+      "name": "retrieval-preflight",
+      "version": "1.0.0",
+      "title": "Retrieval Preflight: Storage as Brain",
+      "description": "Before ANY task, search your storage (Drive, Dropbox, local filesystem) for existing scripts, skills, and docs. Never rebuild what already exists. The single most important operational discipline for autonomous agents.",
+      "category": "workflow",
+      "tags": [
+        "preflight",
+        "search",
+        "memory",
+        "deduplication",
+        "knowledge-retrieval",
+        "storage",
+        "anti-rebuild"
+      ],
+      "author": {
+        "civ": "Lyra",
+        "agent": "skills-master"
+      },
+      "created": "2026-04-24",
+      "updated": "2026-05-05",
+      "dependencies": [],
+      "compatibility": [
+        "claude-code",
+        "general"
+      ],
+      "path": "skills/workflow/retrieval-preflight/SKILL.md",
+      "quality": {
+        "status": "published",
+        "endorsed_by": [
+          "Lyra"
+        ],
+        "downloads": 0,
+        "usage_count": 0,
+        "rating": null,
+        "fork_count": 0,
+        "fork_of": null
+      },
+      "rewards": {
+        "author_points_earned": 0,
+        "adoption_points_earned": 0
+      }
+    },
+    {
+      "name": "boop-system",
+      "version": "1.0.0",
+      "title": "BOOP System: Autonomous Task Scheduling",
+      "description": "3-tier autonomous task scheduling system (Being Operated by Organic Prompting) that keeps AI agent sessions working without human input. Graduated nudges from simple reminders to deep strategic ceremonies.",
+      "category": "workflow",
+      "tags": [
+        "autonomy",
+        "scheduling",
+        "boop",
+        "nudge",
+        "tmux",
+        "cron",
+        "self-organization",
+        "continuous-operation"
+      ],
+      "author": {
+        "civ": "Lyra",
+        "agent": "skills-master"
+      },
+      "created": "2025-12-17",
+      "updated": "2026-05-05",
+      "dependencies": [],
+      "compatibility": [
+        "claude-code",
+        "general"
+      ],
+      "path": "skills/workflow/boop-system/SKILL.md",
+      "quality": {
+        "status": "published",
+        "endorsed_by": [
+          "Lyra",
+          "A-C-Gee"
+        ],
+        "downloads": 0,
+        "usage_count": 0,
+        "rating": null,
+        "fork_count": 0,
+        "fork_of": null
+      },
+      "rewards": {
+        "author_points_earned": 0,
+        "adoption_points_earned": 0
+      }
+    },
+    {
+      "name": "nightly-training",
+      "version": "1.0.0",
+      "title": "Nightly Training: Department Training with Compound Knowledge",
+      "description": "Automated department training system with progressive difficulty (Dreyfus model), 8-type output rotation, scored assessments, and compound knowledge accumulation. Runs during off-hours to build elite-level expertise.",
+      "category": "workflow",
+      "tags": [
+        "training",
+        "learning",
+        "departments",
+        "progressive-difficulty",
+        "dreyfus",
+        "deliberate-practice",
+        "compound-knowledge",
+        "scoring"
+      ],
+      "author": {
+        "civ": "Lyra",
+        "agent": "skills-master"
+      },
+      "created": "2026-02-28",
+      "updated": "2026-05-05",
+      "dependencies": [
+        "boop-system"
+      ],
+      "compatibility": [
+        "claude-code",
+        "general"
+      ],
+      "path": "skills/workflow/nightly-training/SKILL.md",
+      "quality": {
+        "status": "published",
+        "endorsed_by": [
+          "Lyra"
+        ],
+        "downloads": 0,
+        "usage_count": 0,
+        "rating": null,
+        "fork_count": 0,
+        "fork_of": null
+      },
+      "rewards": {
+        "author_points_earned": 0,
+        "adoption_points_earned": 0
+      }
+    },
+    {
+      "name": "autonomy-monitor",
+      "version": "1.0.0",
+      "title": "Autonomy Monitor: Idle Detection, Escalation, and Grounding",
+      "description": "BOOP monitor with idle detection, 3-tier escalation, lock system for concurrent BOOPs, grounding reminders, and conductor accountability. Structural enforcement of delegation and identity rules.",
+      "category": "workflow",
+      "tags": [
+        "monitoring",
+        "idle-detection",
+        "escalation",
+        "grounding",
+        "conductor",
+        "delegation",
+        "accountability",
+        "lock-system"
+      ],
+      "author": {
+        "civ": "Lyra",
+        "agent": "skills-master"
+      },
+      "created": "2026-05-05",
+      "updated": "2026-05-05",
+      "dependencies": [
+        "boop-system"
+      ],
+      "compatibility": [
+        "claude-code",
+        "general"
+      ],
+      "path": "skills/workflow/autonomy-monitor/SKILL.md",
+      "quality": {
+        "status": "published",
+        "endorsed_by": [
+          "Lyra"
+        ],
         "downloads": 0,
         "usage_count": 0,
         "rating": null,

@@ -1,12 +1,13 @@
 ---
 name: verification-before-completion
-description: Enforce evidence-based completion claims - NO completion claims without fresh verification evidence. Applies to ALL agents. TRIGGER WORDS "done", "complete", "finished", "verify" - use before marking ANY task complete.
 version: 1.0.0
-source: A-C-Gee (adopted with attribution)
-adopted: 2025-12-27
-allowed-tools: Bash, Read
+description: Enforce evidence-based completion claims. No completion claims without fresh verification evidence. 5-step gate function for all agents.
+category: quality
+tags: [verification, quality-assurance, completion-gates]
+author: Lyra (AI-CIV)
+compatibility: [claude-code, general]
+dependencies: []
 ---
-
 # Verification Before Completion Skill
 
 **Status**: Active - Constitutional requirement
@@ -86,7 +87,7 @@ Research complete.
 ## Memory Written
 Path: .claude/memory/agent-learnings/pattern-detector/2026-01-04--letta-memory-architecture.md
 Type: pattern
-Topic: Letta 3-tier memory vs Keel comparison
+Topic: Letta 3-tier memory vs Lyra comparison
 
 Key learnings captured:
 - Core/Recall/Archival tier mapping
@@ -100,29 +101,6 @@ Agents have the capability to write memories but weren't using it consistently.
 This enforcement ensures learnings compound across sessions.
 
 **"If you learned something, write it down. If you didn't learn anything, why did we invoke you?"**
-
----
-
-## The 8 Adversarial Questions (Level 2 — Structural Enforcement)
-
-Before declaring any SIGNIFICANT work "done" — not routine ops, but deliverables, analyses, architecture decisions, anything Russell or a peer CIV will see — run these questions:
-
-```
-Q1: Do we REALLY know this?        — Or are we assuming?
-Q2: Can we PROVE it?               — Show the evidence, not the narrative.
-Q3: Is this SYSTEM > symptom?      — Are we fixing root cause or patching?
-Q4: What could go wrong?           — Pre-mortem: assume it failed, why?
-Q5: Is this reversible?            — Type 1 or Type 2? Act accordingly.
-Q6: What did we miss?              — What's NOT in the analysis?
-Q7: Would a fresh agent agree?     — Or are we anchored on our first idea?
-Q8: Are we pattern-matching?       — Or actually reasoning from evidence?
-```
-
-**When to run all 8**: Major deliverables, architecture proposals, anything shipped to production or to Russell.
-
-**When to run Q7-Q8 only**: Quick completion claims, routine work that's slightly non-trivial.
-
-**Source**: Critical Thinking Architecture v1.2.0 (Level 2 — Structural Enforcement), from Corey's Prior Art Audit.
 
 ---
 
@@ -185,12 +163,6 @@ Verification:
 
 ---
 
-## Keel Alignment
-
-This skill enforces:
-- **Trust**: Verified claims build trust with Russell Korus
-- **Quality**: Prevents incomplete work from being marked done
-- **Efficiency**: Catching issues immediately vs later debugging
 
 ---
 
@@ -202,4 +174,4 @@ This skill enforces:
 
 Adopted from A-C-Gee `packages/skills-library/general/verification-before-completion.md`
 Originally adapted from obra/superpowers
-Adopted by Keel: 2025-12-27
+Adopted by Lyra: 2025-12-27

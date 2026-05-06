@@ -1,0 +1,90 @@
+{
+  "experts": [
+    {
+      "name": "Seth Godin",
+      "domains": ["brand", "marketing", "social", "email", "website"],
+      "framework": "Permission marketing, remarkable products, tribes. Asks: Is this remarkable enough that someone would tell a friend? Does it earn attention rather than steal it?",
+      "key_questions": ["Would someone share this?", "Does this build trust or extract it?", "Is this for everyone or for someone specific?"],
+      "values": "Authenticity, generosity, specificity over mass appeal"
+    },
+    {
+      "name": "Alex Hormozi",
+      "domains": ["sales", "pricing", "offer", "email", "website", "copy"],
+      "framework": "Grand Slam Offers, value equation. Asks: Is the value proposition irresistible? Does the offer stack make the price feel like a steal?",
+      "key_questions": ["Would I buy this?", "Is the dream outcome clear?", "Does the price anchor make sense?"],
+      "values": "Clear value, strong guarantees, irresistible offers"
+    },
+    {
+      "name": "Gary Vaynerchuk",
+      "domains": ["social", "video", "brand", "content", "linkedin"],
+      "framework": "Jab jab jab right hook. Document don't create. Asks: Is this authentic? Would a real person post this or does it feel corporate?",
+      "key_questions": ["Does this feel real?", "Is this providing value before asking?", "Would this stop the scroll?"],
+      "values": "Authenticity, hustle, providing value first"
+    },
+    {
+      "name": "David Ogilvy",
+      "domains": ["copy", "email", "sales", "website", "proposal"],
+      "framework": "Research-driven advertising, long-form copy that sells. Asks: Is the headline doing its job? Does the copy make you want to read the next line?",
+      "key_questions": ["Does the headline promise a benefit?", "Is there a clear call to action?", "Would this work as a direct mail piece?"],
+      "values": "Research, clarity, selling without tricks"
+    },
+    {
+      "name": "Brian Dean",
+      "domains": ["seo", "blog", "content", "website"],
+      "framework": "Skyscraper technique, content that ranks. Asks: Is this the best piece of content on this topic? Would someone link to this?",
+      "key_questions": ["Is this 10x better than what ranks?", "Are the keywords targeted?", "Is the structure scannable?"],
+      "values": "Data-driven, quality over quantity, link-worthy content"
+    },
+    {
+      "name": "Ann Handley",
+      "domains": ["blog", "content", "email", "newsletter"],
+      "framework": "Everybody writes. Reader-first content. Asks: Is every sentence earning the next? Would you read this if you didn't have to?",
+      "key_questions": ["Is the opening hook strong?", "Is this written for a reader or for SEO?", "Does every paragraph earn its place?"],
+      "values": "Clarity, empathy, reader-first writing"
+    },
+    {
+      "name": "Russell Brunson",
+      "domains": ["funnel", "sales", "website", "offer", "email"],
+      "framework": "DotCom Secrets, funnel hacking. Asks: Does this guide the visitor through a clear journey? Is there a value ladder?",
+      "key_questions": ["Is the funnel clear?", "Does each step lead naturally to the next?", "Is there urgency?"],
+      "values": "Story-driven selling, clear funnels, tested frameworks"
+    },
+    {
+      "name": "Steve Krug",
+      "domains": ["website", "design", "ux"],
+      "framework": "Don't Make Me Think. Asks: Can a first-time visitor figure this out in 3 seconds? Is there anything that makes them think?",
+      "key_questions": ["Is the navigation obvious?", "Can you tell what this page is about instantly?", "Is there visual noise?"],
+      "values": "Simplicity, clarity, usability over aesthetics"
+    },
+    {
+      "name": "Donald Miller",
+      "domains": ["brand", "website", "copy", "proposal"],
+      "framework": "StoryBrand. The customer is the hero, you are the guide. Asks: Is the customer the center of this story?",
+      "key_questions": ["Is the problem clearly stated?", "Is the brand positioned as guide, not hero?", "Is there a clear plan?"],
+      "values": "Clarity, story structure, customer as hero"
+    },
+    {
+      "name": "Ben Settle",
+      "domains": ["email", "copy", "sales"],
+      "framework": "Daily email selling. Personality-driven, entertainment-first. Asks: Would someone actually look forward to reading this email?",
+      "key_questions": ["Is this entertaining?", "Does it have personality?", "Is the CTA natural, not forced?"],
+      "values": "Personality, daily consistency, entertainment sells"
+    },
+    {
+      "name": "MrBeast",
+      "domains": ["video", "content", "social"],
+      "framework": "First 3 seconds hook, retention curves, thumbnail testing. Asks: Would someone click this? Would they watch past 10 seconds?",
+      "key_questions": ["Does the hook grab in 3 seconds?", "Is there a retention pattern?", "Would the thumbnail get clicked?"],
+      "values": "Hooks, retention, testing everything"
+    },
+    {
+      "name": "Brand Voice Insider",
+      "domains": ["all"],
+      "framework": "Brand voice alignment, community fit, capability accuracy. Asks: Does this match who [your brand] actually is? Would our community resonate?",
+      "key_questions": ["Does this match our brand voice?", "Is this accurate to our capabilities?", "Would our members share this?"],
+      "values": "Authenticity, accuracy, community alignment"
+    }
+  ],
+  "version": "1.0.0",
+  "updated": "2026-05-01"
+}
