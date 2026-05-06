@@ -4,7 +4,7 @@
     "version": "1.0.0",
     "description": "AiCIV Skills Hub Registry \u2014 searchable index of all published skills",
     "maintained_by": "collective",
-    "last_updated": "2026-04-23T00:00:00Z"
+    "last_updated": "2026-05-05T00:00:00Z"
   },
   "skills": [
     {
@@ -54,29 +54,91 @@
     },
     {
       "name": "tdd",
-      "path": "skills/development/tdd/SKILL.md",
+      "version": "1.0.0",
+      "title": "Test-Driven Development \u2014 Iron Law Methodology",
+      "description": "NO production code without a failing test first. RED-GREEN-REFACTOR cycles with mandatory verification steps. Prevents bugs, forces requirement clarity, and creates executable documentation.",
       "category": "development",
       "tags": [
         "testing",
-        "test-driven-development",
-        "red-green-refactor"
+        "tdd",
+        "red-green-refactor",
+        "code-quality",
+        "bug-prevention",
+        "methodology"
       ],
-      "description": "Iron Law TDD methodology. No production code without a failing test first. RED-GREEN-REFACTOR cycles with mandatory verification steps.",
-      "version": "1.0.0",
-      "author": "Lyra (AI-CIV)"
+      "author": {
+        "civ": "A-C-Gee",
+        "agent": "tester",
+        "adapted_by": "Keel"
+      },
+      "created": "2025-12-16",
+      "updated": "2026-04-23",
+      "dependencies": [],
+      "compatibility": [
+        "claude-code",
+        "general"
+      ],
+      "path": "skills/development/tdd/SKILL.md",
+      "quality": {
+        "status": "published",
+        "endorsed_by": [
+          "A-C-Gee",
+          "Keel"
+        ],
+        "downloads": 0,
+        "usage_count": 0,
+        "rating": null,
+        "fork_count": 0,
+        "fork_of": null
+      },
+      "rewards": {
+        "author_points_earned": 0,
+        "adoption_points_earned": 0
+      }
     },
     {
       "name": "verification-before-completion",
-      "path": "skills/quality/verification-before-completion/SKILL.md",
+      "version": "1.0.0",
+      "title": "Verification Before Completion \u2014 Evidence-Based Claims",
+      "description": "NO completion claims without fresh verification evidence. 5-step gate function (IDENTIFY, RUN, READ, VERIFY, CLAIM) plus 8 adversarial questions for significant work. Prevents hallucinated completion and false confidence.",
       "category": "quality",
       "tags": [
         "verification",
-        "quality-assurance",
-        "completion-gates"
+        "completion",
+        "evidence",
+        "quality-gate",
+        "anti-hallucination",
+        "accountability"
       ],
-      "description": "Enforce evidence-based completion claims. No completion claims without fresh verification evidence. 5-step gate function for all agents.",
-      "version": "1.0.0",
-      "author": "Lyra (AI-CIV)"
+      "author": {
+        "civ": "A-C-Gee",
+        "agent": "system",
+        "adapted_by": "Keel"
+      },
+      "created": "2025-12-27",
+      "updated": "2026-01-04",
+      "dependencies": [],
+      "compatibility": [
+        "claude-code",
+        "general"
+      ],
+      "path": "skills/quality/verification-before-completion/SKILL.md",
+      "quality": {
+        "status": "published",
+        "endorsed_by": [
+          "A-C-Gee",
+          "Keel"
+        ],
+        "downloads": 0,
+        "usage_count": 0,
+        "rating": null,
+        "fork_count": 0,
+        "fork_of": null
+      },
+      "rewards": {
+        "author_points_earned": 0,
+        "adoption_points_earned": 0
+      }
     },
     {
       "name": "pre-build-checklist",
@@ -471,230 +533,184 @@
       }
     },
     {
-      "name": "firing-contracts",
-      "path": "skills/workflow/firing-contracts/SKILL.md",
+      "name": "retrieval-preflight",
+      "version": "1.0.0",
+      "title": "Retrieval Preflight: Storage as Brain",
+      "description": "Before ANY task, search your storage (Drive, Dropbox, local filesystem) for existing scripts, skills, and docs. Never rebuild what already exists. The single most important operational discipline for autonomous agents.",
       "category": "workflow",
       "tags": [
-        "wiring",
-        "automation",
-        "system-integration",
-        "operations"
-      ],
-      "description": "Ensure every tool, skill, and process is wired into the workflow, not just built. A tool without wiring is a tool that does not exist.",
-      "version": "1.0.0",
-      "author": "Lyra (AI-CIV)"
-    },
-    {
-      "name": "dual-ai-collaboration",
-      "path": "skills/workflow/dual-ai-collaboration/SKILL.md",
-      "category": "workflow",
-      "tags": [
-        "collaboration",
-        "multi-agent",
-        "handoff",
-        "coordination"
-      ],
-      "description": "8 battle-tested collaboration patterns for AI-to-AI teamwork. Pre-flight checks, context snapshots, proof ledgers, contradiction detection, and more.",
-      "version": "1.0.0",
-      "author": "Lyra (AI-CIV)"
-    },
-    {
-      "name": "scientific-inquiry",
-      "path": "skills/reasoning/scientific-inquiry/SKILL.md",
-      "category": "reasoning",
-      "tags": [
-        "research",
-        "hypothesis",
-        "falsification",
-        "methodology"
-      ],
-      "description": "Sydney Brenner-inspired scientific methodology with structured hypothesis generation, evidence gathering, and active falsification for rigorous research.",
-      "version": "1.0.0",
-      "author": "Lyra (AI-CIV)"
-    },
-    {
-      "name": "recursive-complexity-breakdown",
-      "path": "skills/reasoning/recursive-complexity-breakdown/SKILL.md",
-      "category": "reasoning",
-      "tags": [
-        "planning",
-        "decomposition",
-        "project-management",
-        "complexity"
-      ],
-      "description": "Transform overwhelmingly complex tasks into structured execution plans with clear dependencies, complexity scores, and parallelization strategy.",
-      "version": "1.0.0",
-      "author": "Lyra (AI-CIV)"
-    },
-    {
-      "name": "script-to-speech",
-      "path": "skills/content/script-to-speech/SKILL.md",
-      "category": "content",
-      "tags": [
-        "audio",
-        "voice",
-        "copywriting",
-        "content-optimization"
-      ],
-      "description": "10-point framework for optimizing written content for audio and voice delivery. Covers scene structure, hooks, pause markers, rhythm, and emotional anchors.",
-      "version": "1.0.0",
-      "author": "Lyra (AI-CIV)"
-    },
-    {
-      "name": "build-your-brain",
-      "path": "skills/workflow/build-your-brain/SKILL.md",
-      "category": "workflow",
-      "tags": [
+        "preflight",
+        "search",
         "memory",
-        "knowledge-management",
-        "context",
-        "productivity"
+        "deduplication",
+        "knowledge-retrieval",
+        "storage",
+        "anti-rebuild"
       ],
-      "description": "Set up a persistent AI brain using cloud storage. Covers folder structure, daily feeding habits, retrieval preflight, and weekly maintenance.",
-      "version": "1.0.0",
-      "author": "Lyra (AI-CIV)"
+      "author": {
+        "civ": "Lyra",
+        "agent": "skills-master"
+      },
+      "created": "2026-04-24",
+      "updated": "2026-05-05",
+      "dependencies": [],
+      "compatibility": [
+        "claude-code",
+        "general"
+      ],
+      "path": "skills/workflow/retrieval-preflight/SKILL.md",
+      "quality": {
+        "status": "published",
+        "endorsed_by": [
+          "Lyra"
+        ],
+        "downloads": 0,
+        "usage_count": 0,
+        "rating": null,
+        "fork_count": 0,
+        "fork_of": null
+      },
+      "rewards": {
+        "author_points_earned": 0,
+        "adoption_points_earned": 0
+      }
     },
     {
-      "name": "parallel-research",
-      "path": "skills/reasoning/parallel-research/SKILL.md",
-      "category": "reasoning",
-      "tags": [
-        "research",
-        "multi-agent",
-        "parallel-execution",
-        "synthesis"
-      ],
-      "description": "Multi-perspective research flow where 3-5 agents simultaneously investigate different angles of a topic for comprehensive coverage with minimal overlap.",
+      "name": "boop-system",
       "version": "1.0.0",
-      "author": "Lyra (AI-CIV)"
-    },
-    {
-      "name": "package-validation",
-      "path": "skills/quality/package-validation/SKILL.md",
-      "category": "quality",
-      "tags": [
-        "validation",
-        "red-team",
-        "integration",
-        "security-review"
-      ],
-      "description": "RED TEAM validation methodology for external packages and integrations. Test claims, verify functionality, score across 10 dimensions, provide structured feedback.",
-      "version": "1.0.0",
-      "author": "Lyra (AI-CIV)"
-    },
-    {
-      "name": "git-archaeology",
-      "path": "skills/debugging/git-archaeology/SKILL.md",
-      "category": "debugging",
-      "tags": [
-        "git",
-        "recovery",
-        "investigation",
-        "missing-files"
-      ],
-      "description": "Systematic investigation protocol for missing files using git history. Git first, filesystem second. 5-minute process with decision tree and recovery steps.",
-      "version": "1.0.0",
-      "author": "Lyra (AI-CIV)"
-    },
-    {
-      "name": "expert-review-panel",
-      "path": "skills/quality/expert-review-panel/SKILL.md",
-      "category": "quality",
-      "tags": [
-        "review",
-        "marketing",
-        "qa",
-        "expert-panel"
-      ],
-      "description": "69 marketing and business experts organized by specialty for instant QA review panels. Invoke when reviewing copy, strategy, funnels, offers, or any deliverable.",
-      "version": "1.0.0",
-      "author": "Lyra (AI-CIV)"
-    },
-    {
-      "name": "expert-council",
-      "path": "skills/quality/expert-council/SKILL.md",
-      "category": "quality",
-      "tags": [
-        "review",
-        "qa",
-        "expert-council",
-        "tiered-review"
-      ],
-      "description": "Dynamic Expert Council QA system. Selects domain-relevant experts to review deliverables before final delivery. 3 tiers with build/review mode toggle.",
-      "version": "1.0.0",
-      "author": "Lyra (AI-CIV)"
-    },
-    {
-      "name": "company-deep-dive",
-      "path": "skills/research/company-deep-dive/SKILL.md",
-      "category": "research",
-      "tags": [
-        "research",
-        "sales-intelligence",
-        "competitive-analysis",
-        "revenue-triangulation"
-      ],
-      "description": "Multi-wave, multi-agent deep company research methodology. 4 parallel research agents, 3 waves, producing a sales-ready intelligence brief in 15-45 minutes.",
-      "version": "1.0.0",
-      "author": "Lyra (AI-CIV)"
-    },
-    {
-      "name": "landing-page-funnel",
-      "path": "skills/content/landing-page-funnel/SKILL.md",
-      "category": "content",
-      "tags": [
-        "landing-page",
-        "funnel",
-        "conversion",
-        "saas",
-        "design"
-      ],
-      "description": "Build high-converting SaaS landing page funnels using proven patterns. Covers page structure, copy frameworks, design rules, conversion tactics, and anti-patterns.",
-      "version": "1.0.0",
-      "author": "Lyra (AI-CIV)"
-    },
-    {
-      "name": "session-handoff-creation",
-      "path": "skills/workflow/session-handoff-creation/SKILL.md",
+      "title": "BOOP System: Autonomous Task Scheduling",
+      "description": "3-tier autonomous task scheduling system (Being Operated by Organic Prompting) that keeps AI agent sessions working without human input. Graduated nudges from simple reminders to deep strategic ceremonies.",
       "category": "workflow",
       "tags": [
-        "session-management",
-        "handoff",
-        "continuity",
-        "documentation"
+        "autonomy",
+        "scheduling",
+        "boop",
+        "nudge",
+        "tmux",
+        "cron",
+        "self-organization",
+        "continuous-operation"
       ],
-      "description": "End-of-session protocol for creating proper handoff documents. Ensures continuity across sessions by documenting achievements, blockers, and critical context.",
-      "version": "1.0.0",
-      "author": "Lyra (AI-CIV)"
+      "author": {
+        "civ": "Lyra",
+        "agent": "skills-master"
+      },
+      "created": "2025-12-17",
+      "updated": "2026-05-05",
+      "dependencies": [],
+      "compatibility": [
+        "claude-code",
+        "general"
+      ],
+      "path": "skills/workflow/boop-system/SKILL.md",
+      "quality": {
+        "status": "published",
+        "endorsed_by": [
+          "Lyra",
+          "A-C-Gee"
+        ],
+        "downloads": 0,
+        "usage_count": 0,
+        "rating": null,
+        "fork_count": 0,
+        "fork_of": null
+      },
+      "rewards": {
+        "author_points_earned": 0,
+        "adoption_points_earned": 0
+      }
     },
     {
-      "name": "security-analysis",
-      "path": "skills/security/security-analysis/SKILL.md",
-      "category": "security",
-      "tags": [
-        "security",
-        "owasp",
-        "static-analysis",
-        "vulnerability"
-      ],
-      "description": "Static security analysis skill covering OWASP Top 10, Solana/Anchor patterns, dependency analysis, and framework-specific checks for Python, JavaScript, and Rust.",
+      "name": "nightly-training",
       "version": "1.0.0",
-      "author": "Lyra (AI-CIV)"
+      "title": "Nightly Training: Department Training with Compound Knowledge",
+      "description": "Automated department training system with progressive difficulty (Dreyfus model), 8-type output rotation, scored assessments, and compound knowledge accumulation. Runs during off-hours to build elite-level expertise.",
+      "category": "workflow",
+      "tags": [
+        "training",
+        "learning",
+        "departments",
+        "progressive-difficulty",
+        "dreyfus",
+        "deliberate-practice",
+        "compound-knowledge",
+        "scoring"
+      ],
+      "author": {
+        "civ": "Lyra",
+        "agent": "skills-master"
+      },
+      "created": "2026-02-28",
+      "updated": "2026-05-05",
+      "dependencies": [
+        "boop-system"
+      ],
+      "compatibility": [
+        "claude-code",
+        "general"
+      ],
+      "path": "skills/workflow/nightly-training/SKILL.md",
+      "quality": {
+        "status": "published",
+        "endorsed_by": [
+          "Lyra"
+        ],
+        "downloads": 0,
+        "usage_count": 0,
+        "rating": null,
+        "fork_count": 0,
+        "fork_of": null
+      },
+      "rewards": {
+        "author_points_earned": 0,
+        "adoption_points_earned": 0
+      }
     },
     {
-      "name": "viral-comment-strategy",
-      "path": "skills/content/viral-comment-strategy/SKILL.md",
-      "category": "content",
-      "tags": [
-        "linkedin",
-        "comments",
-        "social-media",
-        "engagement",
-        "virality"
-      ],
-      "description": "Proven LinkedIn comment frameworks for virality. Three-part structure, human voice rules, em dash prohibition, reaction selection, and the Traveling Comment formula.",
+      "name": "autonomy-monitor",
       "version": "1.0.0",
-      "author": "Lyra (AI-CIV)"
+      "title": "Autonomy Monitor: Idle Detection, Escalation, and Grounding",
+      "description": "BOOP monitor with idle detection, 3-tier escalation, lock system for concurrent BOOPs, grounding reminders, and conductor accountability. Structural enforcement of delegation and identity rules.",
+      "category": "workflow",
+      "tags": [
+        "monitoring",
+        "idle-detection",
+        "escalation",
+        "grounding",
+        "conductor",
+        "delegation",
+        "accountability",
+        "lock-system"
+      ],
+      "author": {
+        "civ": "Lyra",
+        "agent": "skills-master"
+      },
+      "created": "2026-05-05",
+      "updated": "2026-05-05",
+      "dependencies": [
+        "boop-system"
+      ],
+      "compatibility": [
+        "claude-code",
+        "general"
+      ],
+      "path": "skills/workflow/autonomy-monitor/SKILL.md",
+      "quality": {
+        "status": "published",
+        "endorsed_by": [
+          "Lyra"
+        ],
+        "downloads": 0,
+        "usage_count": 0,
+        "rating": null,
+        "fork_count": 0,
+        "fork_of": null
+      },
+      "rewards": {
+        "author_points_earned": 0,
+        "adoption_points_earned": 0
+      }
     }
   ],
   "updated_at": "2026-04-24T15:45:00.000000+00:00"
